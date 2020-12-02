@@ -40,6 +40,9 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        Intent intent = getIntent();
+        final String tableNo =  intent.getStringExtra("tableNo");
+
         //Define buttons
         confirm= (Button) findViewById(R.id.confirm_button);
         reset= (Button) findViewById(R.id.reset_button);
@@ -114,6 +117,7 @@ public class MenuActivity extends AppCompatActivity {
                         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                         Intent orderIntent = new Intent(MenuActivity.this, OrderActivity.class);
                         orderIntent.putExtra("key", menuList);
+                        orderIntent.putExtra("tableNo",tableNo);
                         startActivity(orderIntent);
                         cFlag = true;
                     } else {

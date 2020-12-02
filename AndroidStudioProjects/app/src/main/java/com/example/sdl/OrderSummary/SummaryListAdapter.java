@@ -81,7 +81,7 @@ class SummaryListAdapter implements ListAdapter {
                     //we are passing the position which is to be removed in the method
                     int i = order.getQuantity();
                     if (i > 1) {
-                        order.setQuantity(order.getQuantity()-1);
+                        order.setQuantity((order.getQuantity()-1));
                         quantity.setText(Integer.toString(order.getQuantity()));
                     } else {
 

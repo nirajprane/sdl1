@@ -39,6 +39,7 @@ public class OrderFragment extends Fragment {
                 // TODO Auto-generated method stub
 
                 Intent menuIntent = new Intent(getContext(), MenuActivity.class);
+                menuIntent.putExtra("tableNo",tableNumbers[position]);
                 startActivity(menuIntent);
 
             }

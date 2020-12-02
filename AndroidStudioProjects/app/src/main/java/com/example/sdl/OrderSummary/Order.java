@@ -5,10 +5,10 @@ public class Order {
     String item;
     int quantity;
 
-    public Order(int sNo, String item, int quantity) {
+    public Order(int sNo, String item) {
         this.sNo = sNo;
         this.item = item;
-        this.quantity = quantity;
+        this.quantity = 1;
     }
 
     public int getsNo() {
