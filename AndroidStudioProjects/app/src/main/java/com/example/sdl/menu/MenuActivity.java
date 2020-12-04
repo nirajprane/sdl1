@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.sdl.ActivityForTable;
 import com.example.sdl.OrderSummary.OrderActivity;
 import com.example.sdl.R;
 import com.google.firebase.database.DataSnapshot;
@@ -122,8 +123,9 @@ public class MenuActivity extends AppCompatActivity {
                         Intent orderIntent = new Intent(MenuActivity.this, OrderActivity.class);
                         orderIntent.putExtra("key", menuList);
                         orderIntent.putExtra("tableNoFromMenu",tableNo);
-                        startActivity(orderIntent);
                         cFlag[tablePos-1] = true;
+                        startActivity(orderIntent);
+                        finish();
                     } else {
                         Toast toast = Toast.makeText(getApplicationContext(), "No item selected", Toast.LENGTH_SHORT);
                         toast.show();
@@ -212,6 +214,15 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
+
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(MenuActivity.this, ActivityForTable.class));
+        finish();
 
     }
 

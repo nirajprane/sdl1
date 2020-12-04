@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,10 +31,11 @@ import java.util.List;
 public class OrderActivity extends AppCompatActivity {
 
     ArrayList<String> menuList = new ArrayList<>();
-    ArrayList<Order> orderList;
+    public ArrayList<Order>  orderList = new ArrayList<Order>();;
     ListView list;
     String tableNoFromMenu;
     String tableNoFromOrder;
+     boolean dataExist= false;
 
 
     @Override
@@ -48,16 +53,21 @@ public class OrderActivity extends AppCompatActivity {
         tableNoFromOrder = getIntent().getStringExtra("tableNoFromOrder");
 
         list = findViewById(R.id.listViewOrder);
-        orderList = new ArrayList<>();
+
 
         //to check from where orderActivity is opened
         if (tableNoFromOrder == null) {
+
             menuList = (ArrayList<String>) getIntent().getSerializableExtra("key");
             addItemToOrderList();
+            table.setText(tableNoFromMenu);
+            displayList();
         } else {
+
             loadFromDatabase();
+            table.setText(tableNoFromOrder);
         }
-        displayList();
+
 
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,14 +86,13 @@ public class OrderActivity extends AppCompatActivity {
                 intent.putExtra("tableNoFromOrderSummary", tableNoFromMenu);
                 //intent.putExtra();
                 startActivity(intent);
+                finish();
             }
         });
         endOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent checkoutIntent = new Intent(OrderActivity.this, CheckOutActivity.class);
-                startActivity(checkoutIntent);
-
+                alertDialog();
             }
         });
 
@@ -127,6 +136,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     protected void displayList() {
+
         SummaryListAdapter summaryListAdapterAdapter = new SummaryListAdapter(this, orderList);
         list.setAdapter(summaryListAdapterAdapter);
     }
@@ -153,11 +163,12 @@ public class OrderActivity extends AppCompatActivity {
 
                 // ArrayList<Order> orderListFromDatabase = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    Order order = (Order) ds.getValue(Order.class);
+                    Order order = ds.getValue(Order.class);
                     orderList.add(order);
-                    System.out.println(order);
+
                 }
 
+                displayList();
             }
 
 
@@ -167,9 +178,37 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+        Log.d( "debug",orderList.size()+" uuuuuuuuuuuuuuuuuuuuuuu");
+
+    }
+
+    protected void alertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+        builder.setTitle("Confirmation").setMessage("Do you want this to CheckOut")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent checkoutIntent = new Intent(OrderActivity.this, ActivityForTable.class);
+                        checkoutIntent.putExtra("checkOutTableNo", tableNoFromOrder);
+                        startActivity(checkoutIntent);
+                        finish();
+
+                    }
+                }).setNegativeButton("cancel",null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
 
     }
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(OrderActivity.this, ActivityForTable.class));
+        finish();
+
+    }
+
 
 
 }

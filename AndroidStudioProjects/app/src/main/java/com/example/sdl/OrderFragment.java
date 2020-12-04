@@ -65,11 +65,13 @@ public class OrderFragment extends Fragment {
                     Intent orderIntent = new Intent(getContext(), OrderActivity.class);
                     orderIntent.putExtra("tableNoFromOrder", tableNumbers[position]);
                     startActivity(orderIntent);
+
                 }
                else{
                     Intent menuIntent = new Intent(getContext(), MenuActivity.class);
                     menuIntent.putExtra("tableNo", tableNumbers[position]);
                     startActivity(menuIntent);
+
 
                 }
 
