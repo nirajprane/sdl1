@@ -107,7 +107,8 @@ class SummaryListAdapter implements ListAdapter {
     }
     @Override
     public int getViewTypeCount() {
-        return orderList.size();
+        return 1;
+        //return orderList.size();
     }
     @Override
     public boolean isEmpty() {

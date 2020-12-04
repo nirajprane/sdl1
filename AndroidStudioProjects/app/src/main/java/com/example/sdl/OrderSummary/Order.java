@@ -5,6 +5,9 @@ public class Order {
     String item;
     int quantity;
 
+    //public Order() {
+  //  }
+
     public Order(int sNo, String item) {
         this.sNo = sNo;
         this.item = item;

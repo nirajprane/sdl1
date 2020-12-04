@@ -34,6 +34,7 @@ public class MenuActivity extends AppCompatActivity {
     private RecyclerView recycler_view;
     private Button confirm;
     private Button reset;
+    int tablePos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,9 @@ public class MenuActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String tableNo =  intent.getStringExtra("tableNo");
+        if(tableNo!=null) {
+             tablePos = Integer.parseInt(String.valueOf(tableNo.charAt(1)));
+        }
 
         //Define buttons
         confirm= (Button) findViewById(R.id.confirm_button);
@@ -112,14 +116,14 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (!cFlag) {
+                if (!cFlag[tablePos-1]) {
                     if (menuList.size() != 0) {
-                        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                       // System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                         Intent orderIntent = new Intent(MenuActivity.this, OrderActivity.class);
                         orderIntent.putExtra("key", menuList);
-                        orderIntent.putExtra("tableNo",tableNo);
+                        orderIntent.putExtra("tableNoFromMenu",tableNo);
                         startActivity(orderIntent);
-                        cFlag = true;
+                        cFlag[tablePos-1] = true;
                     } else {
                         Toast toast = Toast.makeText(getApplicationContext(), "No item selected", Toast.LENGTH_SHORT);
                         toast.show();
@@ -127,12 +131,10 @@ public class MenuActivity extends AppCompatActivity {
                 }
                 else{
 
-                    cFlag=false;
+                    cFlag[tablePos-1]=false;
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("result",menuList);
-                    System.out.println(menuList.get(0));
                     setResult(2,returnIntent);
-                    System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
                     finish();
                 }
