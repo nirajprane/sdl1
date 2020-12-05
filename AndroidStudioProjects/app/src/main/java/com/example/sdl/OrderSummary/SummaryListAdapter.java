@@ -15,6 +15,7 @@ import com.example.sdl.R;
 import java.util.ArrayList;
 class SummaryListAdapter implements ListAdapter {
     ArrayList<Order> orderList;
+    ArrayList<Order> orderListForDatabase = new ArrayList<>();
     Context context;
     public SummaryListAdapter(Context context, ArrayList<Order> orderList) {
         this.orderList=orderList;
@@ -82,6 +83,7 @@ class SummaryListAdapter implements ListAdapter {
                     int i = order.getQuantity();
                     if (i > 1) {
                         order.setQuantity((order.getQuantity()-1));
+                        order.setTotalPrice();
                         quantity.setText(Integer.toString(order.getQuantity()));
                     } else {
 
@@ -93,13 +95,19 @@ class SummaryListAdapter implements ListAdapter {
             buttonAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //we will call this method to decrease the selected value from the list
+                    //we will call this method to increase the selected value from the list
                     //we are passing the position which is to be removed in the method
                     order.setQuantity(order.getQuantity() + 1);
                     quantity.setText(Integer.toString(order.getQuantity()));
+                    order.setTotalPrice();
                 }
             });}
+        orderListForDatabase.add(order);
         return convertView;
+
+    }
+    public ArrayList<Order> passOrderListForDatabase(){
+        return orderListForDatabase;
     }
     @Override
     public int getItemViewType(int position) {

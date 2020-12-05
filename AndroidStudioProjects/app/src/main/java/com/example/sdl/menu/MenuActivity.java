@@ -125,12 +125,6 @@ public class MenuActivity extends AppCompatActivity {
                 if (!cFlag[tablePos-1]) {
                     if (menuList.size() != 0) {
 
-                        for(Menu menu : menuList)
-                        {
-
-                           System.out.println( menu.getItemName()+menu.getItemPrice());
-
-                        }
                         Intent orderIntent = new Intent(MenuActivity.this, OrderActivity.class);
                         Bundle args = new Bundle();
                         args.putParcelableArrayList("ARRAYLIST",menuList);

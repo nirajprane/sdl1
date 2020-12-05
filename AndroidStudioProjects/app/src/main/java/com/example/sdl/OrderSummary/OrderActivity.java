@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.example.sdl.Flags.cFlag;
+import static com.example.sdl.Flags.fromOrderActivity;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +36,13 @@ public class OrderActivity extends AppCompatActivity {
 
     ArrayList<Menu> menuList = new ArrayList<>();
     public ArrayList<Order>  orderList = new ArrayList<Order>();
+    public ArrayList<Order> orderListForDatabase = new ArrayList<>();
     ListView list;
     String tableNoFromMenu;
     String tableNoFromOrder;
      boolean dataExist= false;
+    SummaryListAdapter summaryListAdapterAdapter;
+
 
 
     @Override
@@ -62,12 +67,6 @@ public class OrderActivity extends AppCompatActivity {
 
             Bundle args = getIntent().getBundleExtra("BUNDLE");
             menuList =args.getParcelableArrayList("ARRAYLIST");
-            for(Menu menu : menuList)
-            {
-
-                System.out.println( menu.getItemName()+menu.getItemPrice());
-
-            }
 
             addItemToOrderList();
             table.setText(tableNoFromMenu);
@@ -91,7 +90,7 @@ public class OrderActivity extends AppCompatActivity {
         passOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadToDatabase();
+                loadToDatabase("Table/"+tableNoFromMenu);
                 Intent intent = new Intent(OrderActivity.this, ActivityForTable.class);
                 intent.putExtra("tableNoFromOrderSummary", tableNoFromMenu);
                 //intent.putExtra();
@@ -141,38 +140,38 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     protected void addItemToOrderList() {
-        int i;
+        int i=0;
         for(Menu menu : menuList)
         {
-            i=0;
-            orderList.add(new Order(i + 1, menu.getItemName(),1,menu.getItemPrice()));
-            i++;
+            orderList.add(new Order(i++ + 1, menu.getItemName(),1,menu.getItemPrice()));
+
         }
     }
 
     protected void displayList() {
 
-        SummaryListAdapter summaryListAdapterAdapter = new SummaryListAdapter(this, orderList);
+        summaryListAdapterAdapter = new SummaryListAdapter(this, orderList);
         list.setAdapter(summaryListAdapterAdapter);
     }
 
 
-    protected void loadToDatabase() {
+    protected void loadToDatabase(String path) {
 
         //Getting Instance of Firebase realtime database
         FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
 
 
         //Getting Reference to a User node, (it will be created if not already there)
-        DatabaseReference itemNode = databaseInstance.getReference("Table/" + tableNoFromMenu + "/");
-        itemNode.setValue(orderList);
+        DatabaseReference itemNode = databaseInstance.getReference(path + "/");
+        orderListForDatabase =  summaryListAdapterAdapter.passOrderListForDatabase();
+        itemNode.setValue(orderListForDatabase);
 
     }
 
     protected void loadFromDatabase() {
         FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
-        DatabaseReference itemNode = databaseInstance.getReference("Table/" + tableNoFromOrder + "/");
-        itemNode.addValueEventListener(new ValueEventListener() {
+        DatabaseReference tableNode = databaseInstance.getReference("Table/" + tableNoFromOrder + "/");
+        tableNode.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -203,8 +202,12 @@ public class OrderActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        loadToDatabase("OrderForCheckout/"+tableNoFromOrder);
+                        removeDataFromCaptain(tableNoFromOrder);
+                        int tableNo=Integer.parseInt(String.valueOf(tableNoFromOrder.charAt(1)));
+                        fromOrderActivity[tableNo-1]=false;
+                        cFlag[tableNo-1] = false;
                         Intent checkoutIntent = new Intent(OrderActivity.this, ActivityForTable.class);
-                        checkoutIntent.putExtra("checkOutTableNo", tableNoFromOrder);
                         startActivity(checkoutIntent);
                         finish();
 
@@ -214,6 +217,13 @@ public class OrderActivity extends AppCompatActivity {
         dialog.show();
 
 
+    }
+
+    public void removeDataFromCaptain(String tableNo){
+
+        FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
+        DatabaseReference tableNode = databaseInstance.getReference("Table/" + tableNo );
+        tableNode.removeValue();
     }
     @Override
     public void onBackPressed()

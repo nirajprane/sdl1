@@ -18,7 +18,7 @@ import com.example.sdl.OrderSummary.OrderActivity;
 import com.example.sdl.menu.MenuActivity;
 
 import static com.example.sdl.Flags.fromOrderActivity;
-//import static com.example.sdl.Flags.tablePosition;
+
 
 public class OrderFragment extends Fragment {
     GridView gridView;
@@ -31,7 +31,7 @@ public class OrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-      String table =getActivity().getIntent().getStringExtra("tableNoFromOrderSummary");//t1
+       String table =getActivity().getIntent().getStringExtra("tableNoFromOrderSummary");//t1
 
 
         if(table!=null){

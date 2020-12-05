@@ -9,12 +9,13 @@ public class Order {
 
     public Order() { }
 
+
     public Order(int sNo, String item,int quantity, int price) {
         this.sNo = sNo;
         this.item = item;
         this.quantity = quantity;
         this.price =price;
-        this.totalPrice= this.price*this.quantity;
+        this.totalPrice= this.price;
     }
 
 
@@ -56,5 +57,8 @@ public class Order {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+    public void setTotalPrice() {
+        this.totalPrice = this.price*this.quantity;
     }
 }
