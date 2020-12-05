@@ -16,15 +16,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText userName = (EditText) findViewById(R.id.editTextUserName);
-        EditText password = (EditText) findViewById(R.id.editTextPassword);
-        Button login = (Button) findViewById(R.id.buttonLogin);
-        String getUserName = userName.getText().toString();
-        String getPassword = password.getText().toString();
+
     }
 
     public void login(View view) {
-        Intent loginIntent = new Intent(MainActivity.this,ActivityForTable.class);
-        startActivity(loginIntent);
+
     }
 }

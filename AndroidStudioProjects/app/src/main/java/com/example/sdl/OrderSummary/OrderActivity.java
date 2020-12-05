@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.sdl.ActivityForTable;
-import com.example.sdl.CheckOutActivity;
 import com.example.sdl.R;
 import com.example.sdl.menu.Menu;
 import com.example.sdl.menu.MenuActivity;
@@ -28,9 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.example.sdl.Flags.cFlag;
 import static com.example.sdl.Flags.fromOrderActivity;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
 
