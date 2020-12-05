@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.sdl.ActivityForTable;
+import com.example.sdl.OrderSummary.Order;
 import com.example.sdl.OrderSummary.OrderActivity;
 import com.example.sdl.R;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,11 +86,13 @@ public class MenuActivity extends AppCompatActivity {
 
                             for (DataSnapshot snapshot1:dataSnapshot.getChildren())
                             {
-                                final String ChildValue =  snapshot1.getKey().toString();
+                                final String ChildName =  snapshot1.getKey().toString();
+                                final int ChildValue =( (Long) snapshot1.getValue()).intValue();
+
 
                                 snapshot1.child("titre").getValue();
 
-                                Child.add(new ChildList(ChildValue));
+                                Child.add(new ChildList(ChildName,ChildValue));
 
                             }
 
@@ -119,9 +124,17 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!cFlag[tablePos-1]) {
                     if (menuList.size() != 0) {
-                       // System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+                        for(Menu menu : menuList)
+                        {
+
+                           System.out.println( menu.getItemName()+menu.getItemPrice());
+
+                        }
                         Intent orderIntent = new Intent(MenuActivity.this, OrderActivity.class);
-                        orderIntent.putExtra("key", menuList);
+                        Bundle args = new Bundle();
+                        args.putParcelableArrayList("ARRAYLIST",menuList);
+                        orderIntent.putExtra("BUNDLE",args);
                         orderIntent.putExtra("tableNoFromMenu",tableNo);
                         cFlag[tablePos-1] = true;
                         startActivity(orderIntent);
@@ -154,7 +167,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    ArrayList<String> menuList = new ArrayList<String>( );
+    ArrayList<Menu> menuList = new ArrayList<>( );
     public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<MyParentViewHolder,MyChildViewHolder> {
 
 
@@ -179,10 +192,12 @@ public class MenuActivity extends AppCompatActivity {
 
             holder.onBind(childItem.getTitle());
             final String TitleChild=childItem.getTitle();
+            final int TitlePrice=childItem.getPrice();
             holder.check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    menuList.add(TitleChild);
+
+                    menuList.add(new Menu(TitleChild,TitlePrice));
                     Toast toast= null;
                     if (toast!= null) {
                         toast.cancel();

@@ -13,14 +13,22 @@ import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 public class ChildList implements Parcelable {
 
     private String title;
+    private int price;
 
 
-    public ChildList(String title) {
+   /* public ChildList(String title) {
         this.title = title;
+    }*/
+
+    public ChildList(String title, int price) {
+        this.title = title;
+        this.price = price;
     }
 
     protected ChildList(Parcel in) {
         title = in.readString();
+        price = in.readInt();
+
     }
 
     public static final Creator<ChildList> CREATOR = new Creator<ChildList>() {
@@ -43,6 +51,14 @@ public class ChildList implements Parcelable {
         this.title = Title;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int Price) {
+        this.price = Price;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -51,6 +67,7 @@ public class ChildList implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
+        parcel.writeInt(price);
     }
 }
 

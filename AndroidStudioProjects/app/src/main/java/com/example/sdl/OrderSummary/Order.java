@@ -4,14 +4,19 @@ public class Order {
     int sNo;
     String item;
     int quantity;
+    int price;
+    int totalPrice;
 
     public Order() { }
 
-    public Order(int sNo, String item) {
+    public Order(int sNo, String item,int quantity, int price) {
         this.sNo = sNo;
         this.item = item;
-        this.quantity = 1;
+        this.quantity = quantity;
+        this.price =price;
+        this.totalPrice= this.price*this.quantity;
     }
+
 
     public int getsNo() {
         return sNo;
@@ -35,5 +40,21 @@ public class Order {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

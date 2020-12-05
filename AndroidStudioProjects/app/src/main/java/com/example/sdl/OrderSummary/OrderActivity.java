@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.sdl.ActivityForTable;
 import com.example.sdl.CheckOutActivity;
 import com.example.sdl.R;
+import com.example.sdl.menu.Menu;
 import com.example.sdl.menu.MenuActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,13 +26,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
 
-    ArrayList<String> menuList = new ArrayList<>();
-    public ArrayList<Order>  orderList = new ArrayList<Order>();;
+    ArrayList<Menu> menuList = new ArrayList<>();
+    public ArrayList<Order>  orderList = new ArrayList<Order>();
     ListView list;
     String tableNoFromMenu;
     String tableNoFromOrder;
@@ -58,7 +60,15 @@ public class OrderActivity extends AppCompatActivity {
         //to check from where orderActivity is opened
         if (tableNoFromOrder == null) {
 
-            menuList = (ArrayList<String>) getIntent().getSerializableExtra("key");
+            Bundle args = getIntent().getBundleExtra("BUNDLE");
+            menuList =args.getParcelableArrayList("ARRAYLIST");
+            for(Menu menu : menuList)
+            {
+
+                System.out.println( menu.getItemName()+menu.getItemPrice());
+
+            }
+
             addItemToOrderList();
             table.setText(tableNoFromMenu);
             displayList();
@@ -105,7 +115,10 @@ public class OrderActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if (resultCode == 2) {
-                ArrayList<String> addItemList = (ArrayList<String>) getIntent().getSerializableExtra("key");
+                Bundle args = getIntent().getBundleExtra("BUNDLE");
+               // ArrayList<Menu> addItemList = (ArrayList<Menu>) args.getParcelableArrayList("ARRAYLIST");
+                ArrayList<Menu> addItemList = this.getIntent().getExtras().getParcelableArrayList("ARRAYLIST");
+
 
 
                 // System.out.println(addItemList.get(0) + "arrayllist has come");
@@ -128,10 +141,12 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     protected void addItemToOrderList() {
-        for (int i = 0; i < menuList.size(); i++) {
-
-            orderList.add(new Order(i + 1, menuList.get(i)));
-
+        int i;
+        for(Menu menu : menuList)
+        {
+            i=0;
+            orderList.add(new Order(i + 1, menu.getItemName(),1,menu.getItemPrice()));
+            i++;
         }
     }
 
