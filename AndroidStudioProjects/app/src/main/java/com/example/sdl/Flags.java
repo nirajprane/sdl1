@@ -7,6 +7,8 @@ public class Flags {
     public static boolean tableFlag =false;
    // public static int[] tablePosition = new int[7];
     public static boolean[] fromOrderActivity = new boolean[7];
+
+    public static boolean uncheckAll;
 //    public static String table;
 
 }

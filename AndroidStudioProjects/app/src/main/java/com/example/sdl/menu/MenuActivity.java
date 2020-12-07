@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.example.sdl.ActivityForTable;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.sdl.Flags.cFlag;
-
+import static com.example.sdl.Flags.uncheckAll;
 
 
 public class MenuActivity extends AppCompatActivity {
@@ -39,6 +41,9 @@ public class MenuActivity extends AppCompatActivity {
     private Button confirm;
     private Button reset;
     int tablePos;
+    public ArrayList<Menu> menuList = new ArrayList<>( );
+    DocExpandableRecyclerAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +103,7 @@ public class MenuActivity extends AppCompatActivity {
 
                             Parent.add(new ParentList(ParentKey, Child));
 
-                            DocExpandableRecyclerAdapter adapter = new DocExpandableRecyclerAdapter(Parent);
+                            adapter = new DocExpandableRecyclerAdapter(Parent,menuList);
 
                             recycler_view.setAdapter(adapter);
 
@@ -122,9 +127,10 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 if (!cFlag[tablePos-1]) {
                     if (menuList.size() != 0) {
-
+                        System.out.println("from menu first time");
                         Intent orderIntent = new Intent(MenuActivity.this, OrderActivity.class);
                         Bundle args = new Bundle();
                         args.putParcelableArrayList("ARRAYLIST",menuList);
@@ -139,10 +145,13 @@ public class MenuActivity extends AppCompatActivity {
                     }
                 }
                 else{
-
-                    cFlag[tablePos-1]=false;
+                    System.out.println("aaaaaaaaaaaaaaaa");
+                 //   cFlag[tablePos-1]=false;
                     Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result",menuList);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("AddedMenu",menuList);
+                    returnIntent.putExtras(bundle);
+                    returnIntent.putExtra("tableNoFromMenu",tableNo);
                     setResult(2,returnIntent);
 
                     finish();
@@ -155,14 +164,16 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 menuList.clear();
+                adapter.uncheckAll();
             }
         });
 
     }
 
 
-    ArrayList<Menu> menuList = new ArrayList<>( );
-    public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<MyParentViewHolder,MyChildViewHolder> {
+
+
+    /*public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<MyParentViewHolder,MyChildViewHolder> {
 
 
         public DocExpandableRecyclerAdapter(List<ParentList> groups) {
@@ -181,28 +192,34 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindChildViewHolder(MyChildViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
+        public void onBindChildViewHolder(final MyChildViewHolder holder, final int flatPosition, ExpandableGroup group, int childIndex) {
             final ChildList childItem = ((ParentList) group).getItems().get(childIndex);
 
             holder.onBind(childItem.getTitle());
+
             final String TitleChild=childItem.getTitle();
             final int TitlePrice=childItem.getPrice();
+
+            if (uncheckAll) {
+                holder.checkBox.setChecked(false);
+                uncheckAll=false;
+            }
+
             holder.check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     menuList.add(new Menu(TitleChild,TitlePrice));
-                    Toast toast= null;
-                    if (toast!= null) {
-                        toast.cancel();
-                    }
-                    toast = Toast.makeText(getApplicationContext(), menuList.size()+" item selected", Toast.LENGTH_SHORT);
+                    holder.checkBox.setChecked(true);
+                    Toast toast = Toast.makeText(getApplicationContext(), menuList.size()+" item selected", Toast.LENGTH_SHORT);
                     toast.show();
-
 
                 }
 
+
             });
+
+
 
         }
 
@@ -223,8 +240,14 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
+        public void uncheckAll(){
+            uncheckAll=true;
+            notifyDataSetChanged();
 
-    }
+        }
+
+
+    }*/
 
     @Override
     public void onBackPressed()
@@ -234,6 +257,7 @@ public class MenuActivity extends AppCompatActivity {
         finish();
 
     }
+
 
 
 

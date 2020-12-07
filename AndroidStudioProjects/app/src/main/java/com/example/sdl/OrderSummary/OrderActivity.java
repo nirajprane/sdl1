@@ -34,11 +34,12 @@ public class OrderActivity extends AppCompatActivity {
     ArrayList<Menu> menuList = new ArrayList<>();
     public ArrayList<Order>  orderList = new ArrayList<Order>();
     public ArrayList<Order> orderListForDatabase = new ArrayList<>();
+    public ArrayList<Order> orderListForChefDatabase = new ArrayList<>();
     ListView list;
     String tableNoFromMenu;
     String tableNoFromOrder;
-     boolean dataExist= false;
-    SummaryListAdapter summaryListAdapterAdapter;
+    SummaryListAdapter summaryListAdapter;
+    int sizeOfOrderListBeforeNewAdd=0;
 
 
 
@@ -52,7 +53,6 @@ public class OrderActivity extends AppCompatActivity {
         Button endOrder = (Button) findViewById(R.id.endOrder);
         TextView table = (TextView) findViewById(R.id.tableNo);
 
-
         tableNoFromMenu = getIntent().getStringExtra("tableNoFromMenu");
         tableNoFromOrder = getIntent().getStringExtra("tableNoFromOrder");
 
@@ -60,7 +60,8 @@ public class OrderActivity extends AppCompatActivity {
 
 
         //to check from where orderActivity is opened
-        if (tableNoFromOrder == null) {
+        System.out.println("started again zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+        if (tableNoFromOrder == null ) {
 
             Bundle args = getIntent().getBundleExtra("BUNDLE");
             menuList =args.getParcelableArrayList("ARRAYLIST");
@@ -68,7 +69,8 @@ public class OrderActivity extends AppCompatActivity {
             addItemToOrderList();
             table.setText(tableNoFromMenu);
             displayList();
-        } else {
+        }
+        else {
 
             loadFromDatabase();
             table.setText(tableNoFromOrder);
@@ -78,7 +80,9 @@ public class OrderActivity extends AppCompatActivity {
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // dataExist=false;
                 Intent i = new Intent(OrderActivity.this, MenuActivity.class);
+                i.putExtra("tableNo", tableNoFromOrder);
                 startActivityForResult(i, 1);
             }
 
@@ -87,7 +91,9 @@ public class OrderActivity extends AppCompatActivity {
         passOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println(tableNoFromMenu+" bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
                 loadToDatabase("Table/"+tableNoFromMenu);
+                loadToDatabaseForChef();
                 Intent intent = new Intent(OrderActivity.this, ActivityForTable.class);
                 intent.putExtra("tableNoFromOrderSummary", tableNoFromMenu);
                 //intent.putExtra();
@@ -111,23 +117,19 @@ public class OrderActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if (resultCode == 2) {
-                Bundle args = getIntent().getBundleExtra("BUNDLE");
-               // ArrayList<Menu> addItemList = (ArrayList<Menu>) args.getParcelableArrayList("ARRAYLIST");
-                ArrayList<Menu> addItemList = this.getIntent().getExtras().getParcelableArrayList("ARRAYLIST");
 
-
-
-                // System.out.println(addItemList.get(0) + "arrayllist has come");
+                Bundle bundle = data.getExtras();
+                ArrayList<Menu> addItemList = bundle.getParcelableArrayList("AddedMenu");
+                tableNoFromMenu = data.getStringExtra("tableNoFromMenu");
 
                 for (int i = 0; i < addItemList.size(); i++) {
                     menuList.add(addItemList.get(i));
 
+
                 }
 
-                // System.out.println(menuList.size() + "added menu size");
                 addItemToOrderList();
                 displayList();
-
 
             }
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -137,18 +139,19 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     protected void addItemToOrderList() {
-        int i=0;
+        sizeOfOrderListBeforeNewAdd = orderList.size();
         for(Menu menu : menuList)
         {
-            orderList.add(new Order(i++ + 1, menu.getItemName(),1,menu.getItemPrice()));
+            orderList.add(new Order(sizeOfOrderListBeforeNewAdd++ + 1,
+                    menu.getItemName(),1,menu.getItemPrice()));
 
         }
     }
 
     protected void displayList() {
 
-        summaryListAdapterAdapter = new SummaryListAdapter(this, orderList);
-        list.setAdapter(summaryListAdapterAdapter);
+        summaryListAdapter = new SummaryListAdapter(this, orderList);
+        list.setAdapter(summaryListAdapter);
     }
 
 
@@ -160,8 +163,25 @@ public class OrderActivity extends AppCompatActivity {
 
         //Getting Reference to a User node, (it will be created if not already there)
         DatabaseReference itemNode = databaseInstance.getReference(path + "/");
-        orderListForDatabase =  summaryListAdapterAdapter.passOrderListForDatabase();
+        orderListForDatabase =  summaryListAdapter.passOrderListForDatabase();
         itemNode.setValue(orderListForDatabase);
+
+    }
+    protected void loadToDatabaseForChef() {
+
+        //Getting Instance of Firebase realtime database
+        FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
+     //   String
+
+        //Getting Reference to a User node, (it will be created if not already there)
+        DatabaseReference itemNode = databaseInstance.getReference("OrderToPrepare/" +tableNoFromMenu+ "/");
+        orderListForDatabase =  summaryListAdapter.passOrderListForDatabase();
+        int newOrder = sizeOfOrderListBeforeNewAdd-menuList.size();
+        for (int i = newOrder; i < orderListForDatabase.size(); i++) {
+            orderListForChefDatabase.add(orderListForDatabase.get(i));
+
+        }
+        itemNode.setValue(orderListForChefDatabase);
 
     }
 
@@ -176,9 +196,7 @@ public class OrderActivity extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Order order = ds.getValue(Order.class);
                     orderList.add(order);
-
                 }
-
                 displayList();
             }
 

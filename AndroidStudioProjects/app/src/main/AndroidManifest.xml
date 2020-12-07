@@ -22,8 +22,11 @@
         <activity android:name=".AddUserActivity"/>
         <activity android:name=".ManagerMainActivity"/>
         <activity android:name=".OrderSummary.OrderActivity" />
-        <activity android:name=".menu.MenuActivity" />
-        <activity android:name=".ActivityForTable" />
+        <activity android:name=".menu.MenuActivity"
+            android:exported="true"/>
+
+        <activity android:name=".ActivityForTable"
+            android:exported="true"/>
         <activity android:name=".MainActivity"/>
 
     </application>

@@ -75,11 +75,13 @@ class MyChildViewHolder extends ChildViewHolder {
 
     public TextView listChild;
     public RelativeLayout check;
+    public CheckBox checkBox;
 
     public MyChildViewHolder(View itemView) {
         super(itemView);
         listChild = (TextView) itemView.findViewById(R.id.listChild);
         check=(RelativeLayout) itemView.findViewById(R.id.to_check_layout);
+        checkBox= (CheckBox) itemView.findViewById(R.id.checkBox);
 
 
     }
