@@ -9,6 +9,7 @@ public class Flags {
     public static boolean[] fromOrderActivity = new boolean[7];
 
     public static boolean uncheckAll;
+    public static boolean[] colorChef = new boolean[7];
 //    public static String table;
 
 }

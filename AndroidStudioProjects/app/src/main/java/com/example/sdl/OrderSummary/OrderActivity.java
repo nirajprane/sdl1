@@ -38,7 +38,7 @@ public class OrderActivity extends AppCompatActivity {
     ListView list;
     String tableNoFromMenu;
     String tableNoFromOrder;
-    SummaryListAdapter summaryListAdapter;
+    OrderSummaryListAdapter orderSummaryListAdapter;
     int sizeOfOrderListBeforeNewAdd=0;
 
 
@@ -60,7 +60,6 @@ public class OrderActivity extends AppCompatActivity {
 
 
         //to check from where orderActivity is opened
-        System.out.println("started again zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
         if (tableNoFromOrder == null ) {
 
             Bundle args = getIntent().getBundleExtra("BUNDLE");
@@ -150,8 +149,8 @@ public class OrderActivity extends AppCompatActivity {
 
     protected void displayList() {
 
-        summaryListAdapter = new SummaryListAdapter(this, orderList);
-        list.setAdapter(summaryListAdapter);
+        orderSummaryListAdapter = new OrderSummaryListAdapter(this, orderList);
+        list.setAdapter(orderSummaryListAdapter);
     }
 
 
@@ -163,7 +162,7 @@ public class OrderActivity extends AppCompatActivity {
 
         //Getting Reference to a User node, (it will be created if not already there)
         DatabaseReference itemNode = databaseInstance.getReference(path + "/");
-        orderListForDatabase =  summaryListAdapter.passOrderListForDatabase();
+        orderListForDatabase =  orderSummaryListAdapter.passOrderListForDatabase();
         itemNode.setValue(orderListForDatabase);
 
     }
@@ -175,7 +174,7 @@ public class OrderActivity extends AppCompatActivity {
 
         //Getting Reference to a User node, (it will be created if not already there)
         DatabaseReference itemNode = databaseInstance.getReference("OrderToPrepare/" +tableNoFromMenu+ "/");
-        orderListForDatabase =  summaryListAdapter.passOrderListForDatabase();
+        orderListForDatabase =  orderSummaryListAdapter.passOrderListForDatabase();
         int newOrder = sizeOfOrderListBeforeNewAdd-menuList.size();
         for (int i = newOrder; i < orderListForDatabase.size(); i++) {
             orderListForChefDatabase.add(orderListForDatabase.get(i));
@@ -206,8 +205,6 @@ public class OrderActivity extends AppCompatActivity {
 
             }
         });
-
-        Log.d( "debug",orderList.size()+" uuuuuuuuuuuuuuuuuuuuuuu");
 
     }
 

@@ -67,8 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/linear"
-        android:layout_above="@id/liner2"
-        />
+        android:layout_above="@id/liner2" />
 
 
     <LinearLayout

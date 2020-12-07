@@ -13,11 +13,11 @@ import android.widget.TextView;
 import com.example.sdl.R;
 
 import java.util.ArrayList;
-class SummaryListAdapter implements ListAdapter {
+class OrderSummaryListAdapter implements ListAdapter {
     ArrayList<Order> orderList;
     ArrayList<Order> orderListForDatabase = new ArrayList<>();
     Context context;
-    public SummaryListAdapter(Context context, ArrayList<Order> orderList) {
+    public OrderSummaryListAdapter(Context context, ArrayList<Order> orderList) {
         this.orderList=orderList;
         this.context=context;
     }
@@ -53,6 +53,7 @@ class SummaryListAdapter implements ListAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        System.out.println("inside adaper");
         final Order order=orderList.get(position);
         if(convertView==null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
