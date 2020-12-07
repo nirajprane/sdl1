@@ -1,4 +1,4 @@
-package com.example.sdl.chef;
+package com.example.sdl.manager;
 
 import android.os.Bundle;
 
@@ -16,53 +16,59 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ChefMainActivity extends AppCompatActivity {
-    RecyclerView rvgroup;
-    ArrayList<String> arrayListGroup;
-    LinearLayoutManager layoutManagerGroup;
-    GroupAdp adapterGroup;
+public class BillPaymentActivity extends AppCompatActivity {
+    RecyclerView rvgroupbill;
+    ArrayList<String> arrayListGroupBill;
+    LinearLayoutManager layoutManagerGroupBill;
+    BillGroupAdapter adapterGroupBill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chef_main);
+        setContentView(R.layout.activity_bill_payment);
 
-        rvgroup =findViewById(R.id.rv_group);
+        rvgroupbill =findViewById(R.id.rv_group_bill);
 
         //using for loop to add multiple Group
-        arrayListGroup = new ArrayList<>();
-        loadFromDatabase();
+        arrayListGroupBill = new ArrayList<>();
+        System.out.println("insideBillActivity");
+
+        loadFromDataBaseBill();
 
         /*//Initailize group adapter
-        adapterGroup = new GroupAdp(ChefMainActivity.this,arrayListGroup);
+        adapterGroupBill = new BillGroupAdapter(BillPaymentActivity.this,arrayListGroupBill);
 
         //Initialize layout manager
-        layoutManagerGroup = new LinearLayoutManager(this);
+        layoutManagerGroupBill = new LinearLayoutManager(this);
        // layoutManagerGroup.setOrientation(LinearLayoutManager.VERTICAL);
 
         //set layout manager
-        rvgroup.setLayoutManager(layoutManagerGroup);
-        rvgroup.setAdapter(adapterGroup);
-*/
+        rvgroupbill.setLayoutManager(layoutManagerGroupBill);
+        rvgroupbill.setAdapter(adapterGroupBill);*/
+
     }
 
-    protected void loadFromDatabase() {
+
+    protected void loadFromDataBaseBill(){
+        System.out.println("inside loadFromDataBaseBill");
         FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
-        DatabaseReference tableNode = databaseInstance.getReference("OrderToPrepare/" );
+        DatabaseReference tableNode = databaseInstance.getReference("OrderForCheckout/" );
         tableNode.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("inside onDataChange");
 
-                arrayListGroup.clear();
+                arrayListGroupBill.clear();
 
                 // ArrayList<Order> orderListFromDatabase = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     System.out.println("inside forloop");
                     String string = ds.getKey();
-                    arrayListGroup.add(string);
+                    arrayListGroupBill.add(string);
                     System.out.println(string);
                 }
-                display();
+                System.out.println(arrayListGroupBill.size()+" size to arraylist");
+                displayBill();
 
             }
 
@@ -76,18 +82,17 @@ public class ChefMainActivity extends AppCompatActivity {
 
     }
 
-    protected void display(){
 
+    protected void displayBill(){
         //Initailize group adapter
-        adapterGroup = new GroupAdp(ChefMainActivity.this,arrayListGroup);
+        adapterGroupBill = new BillGroupAdapter(BillPaymentActivity.this,arrayListGroupBill);
 
         //Initialize layout manager
-        layoutManagerGroup = new LinearLayoutManager(this);
+        layoutManagerGroupBill = new LinearLayoutManager(this);
         // layoutManagerGroup.setOrientation(LinearLayoutManager.VERTICAL);
 
         //set layout manager
-        rvgroup.setLayoutManager(layoutManagerGroup);
-        rvgroup.setAdapter(adapterGroup);
-
+        rvgroupbill.setLayoutManager(layoutManagerGroupBill);
+        rvgroupbill.setAdapter(adapterGroupBill);
     }
 }

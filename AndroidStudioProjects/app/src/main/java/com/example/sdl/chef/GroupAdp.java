@@ -1,9 +1,6 @@
 package com.example.sdl.chef;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sdl.OrderSummary.Order;
+import com.example.sdl.Order;
 import com.example.sdl.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,8 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import static com.example.sdl.Flags.colorChef;
 
 public class GroupAdp extends RecyclerView.Adapter<GroupAdp.ViewHolder> {
     // Initialize activity and arraylist
@@ -113,14 +108,14 @@ public class GroupAdp extends RecyclerView.Adapter<GroupAdp.ViewHolder> {
             arrayListMember.add(new Order(i,"item"+i,2,44));
         }*/
         //Initialze member adapter
-        MemberAdp adapterMember = new MemberAdp(arrayListMember);
+/*        MemberAdp adapterMember = new MemberAdp(arrayListMember);
 
         //Initailize layoutManager
         LinearLayoutManager layoutManagerMember = new LinearLayoutManager(activity);
         //set layout manager
         holder.rvMember.setLayoutManager(layoutManagerMember);
         //set adapter
-        holder.rvMember.setAdapter(adapterMember);
+        holder.rvMember.setAdapter(adapterMember);*/
 
     }
 

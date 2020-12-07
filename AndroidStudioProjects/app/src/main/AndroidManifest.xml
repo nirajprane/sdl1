@@ -12,24 +12,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".AddUserActivity"/>
-        <activity android:name=".ManagerMainActivity"/>
+        <activity android:name=".manager.AddUserActivity" />
+        <activity
+            android:name=".manager.ManagerMainActivity"
+            android:exported="true" />
         <activity android:name=".OrderSummary.OrderActivity" />
-        <activity android:name=".menu.MenuActivity"
+        <activity
+            android:name=".menu.MenuActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ActivityForTable"
+            android:exported="true" />
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".chef.ChefMainActivity"
+            android:exported="true" />
+        <activity android:name=".manager.BillPaymentActivity"
             android:exported="true"/>
-
-        <activity android:name=".ActivityForTable"
-            android:exported="true"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".chef.ChefMainActivity"
-            android:exported="true"/>
-
     </application>
 
 </manifest>

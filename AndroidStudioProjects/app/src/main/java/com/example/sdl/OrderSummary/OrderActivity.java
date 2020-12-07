@@ -8,13 +8,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.sdl.ActivityForTable;
+import com.example.sdl.Order;
 import com.example.sdl.R;
 import com.example.sdl.menu.Menu;
 import com.example.sdl.menu.MenuActivity;
@@ -90,13 +90,13 @@ public class OrderActivity extends AppCompatActivity {
         passOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(tableNoFromMenu+" bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
                 loadToDatabase("Table/"+tableNoFromMenu);
-                loadToDatabaseForChef();
+
                 Intent intent = new Intent(OrderActivity.this, ActivityForTable.class);
                 intent.putExtra("tableNoFromOrderSummary", tableNoFromMenu);
                 //intent.putExtra();
                 startActivity(intent);
+                loadToDatabaseForChef();
                 finish();
             }
         });

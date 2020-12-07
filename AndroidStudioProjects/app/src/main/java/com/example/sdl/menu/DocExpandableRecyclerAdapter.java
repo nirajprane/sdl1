@@ -47,7 +47,7 @@ public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<
             
         }
 
-        holder.check.setOnClickListener(new View.OnClickListener() {
+       /* holder.check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -59,7 +59,37 @@ public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<
             }
 
 
+        });*/
+        holder.check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!holder.checkBox.isChecked()){
+                    holder.checkBox.setChecked(true);
+                }
+                else {
+                    holder.checkBox.setChecked(false);
+                }
+
+                if (holder.checkBox.isChecked())
+                {
+                    menuList.add(new Menu(TitleChild,TitlePrice));
+                    Toast toast = Toast.makeText(v.getContext(), menuList.size()+" item selected", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else
+                {
+                    for(int i = 0 ; i < menuList.size() ; i++){
+                        if(TitleChild.equalsIgnoreCase(menuList.get(i).itemName)){
+                            menuList.remove(i);
+                        }
+                    }
+                    Toast toast;
+                    toast = Toast.makeText(v.getContext(), TitleChild+" removed", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
         });
+
 
 
 

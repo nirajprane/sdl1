@@ -1,4 +1,4 @@
-package com.example.sdl;
+package com.example.sdl.manager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sdl.R;
+import com.example.sdl.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -104,7 +106,6 @@ public class AddUserActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaa");
                         if (task.isSuccessful()){
 
                             Toast.makeText(AddUserActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();

@@ -1,4 +1,4 @@
-package com.example.sdl;
+package com.example.sdl.manager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sdl.MainActivity;
+import com.example.sdl.R;
+import com.example.sdl.chef.ChefMainActivity;
 
 public class ManagerMainActivity extends AppCompatActivity {
 
@@ -33,21 +37,21 @@ public class ManagerMainActivity extends AppCompatActivity {
         billPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), BillPaymentActivity.class));
             }
         });
 
         waiterScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
         kitchenScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), ChefMainActivity.class));
             }
         });
 

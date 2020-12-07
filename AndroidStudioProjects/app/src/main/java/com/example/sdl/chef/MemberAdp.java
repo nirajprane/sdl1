@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sdl.OrderSummary.Order;
+import com.example.sdl.Order;
 import com.example.sdl.R;
 
 import java.util.ArrayList;

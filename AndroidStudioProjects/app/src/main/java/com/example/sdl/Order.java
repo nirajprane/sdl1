@@ -1,4 +1,4 @@
-package com.example.sdl.OrderSummary;
+package com.example.sdl;
 
 public class Order {
     int sNo;
@@ -15,7 +15,7 @@ public class Order {
         this.item = item;
         this.quantity = quantity;
         this.price =price;
-        this.totalPrice= this.price;
+        this.totalPrice= this.price*this.quantity;
     }
 
 
