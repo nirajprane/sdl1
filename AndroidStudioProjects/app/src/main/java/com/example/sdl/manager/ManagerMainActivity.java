@@ -44,7 +44,7 @@ public class ManagerMainActivity extends AppCompatActivity {
         waiterScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), ManagerActivityForTable.class));
             }
         });
 
@@ -65,7 +65,7 @@ public class ManagerMainActivity extends AppCompatActivity {
         empInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(),UserDisplayActivity.class));
             }
         });
 

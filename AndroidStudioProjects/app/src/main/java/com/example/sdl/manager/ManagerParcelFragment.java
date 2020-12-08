@@ -1,4 +1,4 @@
-package com.example.sdl;
+package com.example.sdl.manager;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-public class ParcelFragment extends Fragment {
+import com.example.sdl.R;
+
+public class ManagerParcelFragment extends Fragment {
     GridView gridView;
     TextView textView;
     String[] tableNumbers = {
@@ -24,9 +26,9 @@ public class ParcelFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.table_list, container, false);
 
         gridView = (GridView) rootView.findViewById(R.id.gridView);
-        textView = (TextView)rootView.findViewById(R.id.textView);
+        textView = (TextView) rootView.findViewById(R.id.textView);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),R.layout.table,R.id.textView,tableNumbers);
+        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), R.layout.table, R.id.textView, tableNumbers);
         GridView gridView = (GridView) rootView.findViewById(R.id.gridView);
         gridView.setAdapter(adapter);
 
@@ -39,5 +41,6 @@ public class ParcelFragment extends Fragment {
 
             }
         });
-        return rootView;}
+        return rootView;
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.sdl.OrderSummary;
+package com.example.sdl.manager;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -13,12 +13,13 @@ import com.example.sdl.Order;
 import com.example.sdl.R;
 
 import java.util.ArrayList;
-class OrderSummaryListAdapter implements ListAdapter {
-    ArrayList<Order> orderList;
-    ArrayList<Order> orderListForDatabase = new ArrayList<>();
+
+class ManagerOrderSummaryListAdapter implements ListAdapter {
+    ArrayList<Order> orderListManager;
+/*    ArrayList<Order> orderListForDatabase = new ArrayList<>();*/
     Context context;
-    public OrderSummaryListAdapter(Context context, ArrayList<Order> orderList) {
-        this.orderList=orderList;
+    public ManagerOrderSummaryListAdapter(Context context, ArrayList<Order> orderList) {
+        this.orderListManager=orderList;
         this.context=context;
     }
     @Override
@@ -37,7 +38,7 @@ class OrderSummaryListAdapter implements ListAdapter {
     }
     @Override
     public int getCount() {
-        return orderList.size();
+        return orderListManager.size();
     }
     @Override
     public Object getItem(int position) {
@@ -54,7 +55,7 @@ class OrderSummaryListAdapter implements ListAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
        // System.out.println("inside adaper");
-        final Order order=orderList.get(position);
+        final Order order=orderListManager.get(position);
         if(convertView==null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView=layoutInflater.inflate(R.layout.list_order_summary, null);
@@ -75,7 +76,10 @@ class OrderSummaryListAdapter implements ListAdapter {
             item.setText(order.getItem());
             quantity.setText(Integer.toString(order.getQuantity()));
 
-            //adding a click listener to the button to decrease quanity
+            buttonAdd.setVisibility(View.INVISIBLE);
+            buttonSubtract.setVisibility(View.INVISIBLE);
+
+           /* //adding a click listener to the button to decrease quanity
             buttonSubtract.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -102,14 +106,15 @@ class OrderSummaryListAdapter implements ListAdapter {
                     quantity.setText(Integer.toString(order.getQuantity()));
                     order.setTotalPrice();
                 }
-            });}
-        orderListForDatabase.add(order);
+            });*/
+        }
+       // orderListForDatabase.add(order);
         return convertView;
 
     }
-    public ArrayList<Order> passOrderListForDatabase(){
-        return orderListForDatabase;
-    }
+//    public ArrayList<Order> passOrderListForDatabase(){
+//        return orderListForDatabase;
+//    }
     @Override
     public int getItemViewType(int position) {
         return position;
@@ -117,7 +122,6 @@ class OrderSummaryListAdapter implements ListAdapter {
     @Override
     public int getViewTypeCount() {
         return 1;
-        //return orderList.size();
     }
     @Override
     public boolean isEmpty() {

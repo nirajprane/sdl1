@@ -35,6 +35,9 @@
             android:exported="true" />
         <activity android:name=".manager.BillPaymentActivity"
             android:exported="true"/>
+        <activity android:name=".manager.ManagerActivityForTable"/>
+        <activity android:name=".manager.ManagerOrderActivity"/>
+        <activity android:name=".manager.UserDisplayActivity"/>
     </application>
 
 </manifest>
