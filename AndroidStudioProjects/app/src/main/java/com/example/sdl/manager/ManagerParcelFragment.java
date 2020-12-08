@@ -35,7 +35,7 @@ public class ManagerParcelFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // TODO Auto-generated method stub
+               //TODO Auto-generated method stub
 
                 /* appending I Love with car brand names */
 

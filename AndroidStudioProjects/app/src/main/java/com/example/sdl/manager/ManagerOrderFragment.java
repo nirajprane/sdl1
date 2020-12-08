@@ -51,8 +51,7 @@ public class ManagerOrderFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-                // TODO Auto-generated method stub
-                //Toast.makeText(getActivity(),"Text! "+position,Toast.LENGTH_SHORT).show();
+                ///Toast.makeText(getActivity(),"Text! "+position,Toast.LENGTH_SHORT).show();
                 //System.out.println(fromOrderActivity[position]);
                // System.out.println(tablePosition[position]);
                 FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
