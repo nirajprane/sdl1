@@ -1,5 +1,6 @@
 package com.example.sdl.manager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sdl.ActivityForTable;
+import com.example.sdl.OrderSummary.OrderActivity;
 import com.example.sdl.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -94,5 +97,13 @@ public class BillPaymentActivity extends AppCompatActivity {
         //set layout manager
         rvgroupbill.setLayoutManager(layoutManagerGroupBill);
         rvgroupbill.setAdapter(adapterGroupBill);
+    }
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(BillPaymentActivity.this,ManagerMainActivity.class));
+        finish();
+
     }
 }

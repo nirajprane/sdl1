@@ -1,11 +1,14 @@
 package com.example.sdl.manager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sdl.ActivityForTable;
+import com.example.sdl.OrderSummary.OrderActivity;
 import com.example.sdl.R;
 
 import com.example.sdl.User;
@@ -65,5 +68,13 @@ public class UserDisplayActivity extends AppCompatActivity {
     {
         super.onStop();
         adapter.stopListening();
+    }
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(UserDisplayActivity.this, ManagerMainActivity.class));
+        finish();
+
     }
 }

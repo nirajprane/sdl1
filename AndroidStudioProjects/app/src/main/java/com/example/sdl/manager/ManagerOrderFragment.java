@@ -64,6 +64,7 @@ public class ManagerOrderFragment extends Fragment {
                            Intent orderIntent = new Intent(getContext(), ManagerOrderActivity.class);
                            orderIntent.putExtra("tableNo", tableNumbers[position]);
                            startActivity(orderIntent);
+                           getActivity().finish();
                        }
                        else{
                            Toast toast = Toast.makeText(getContext(), "No Order Placed", Toast.LENGTH_SHORT);

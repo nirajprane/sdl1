@@ -62,6 +62,7 @@ public class ManagerParcelFragment extends Fragment {
                            Intent orderIntent = new Intent(getContext(), ManagerParcelActivity.class);
                            orderIntent.putExtra("parcelNo", parcelNumbers[position]);
                            startActivity(orderIntent);
+                           getActivity().finish();
                        }
                        else{
                            Toast toast = Toast.makeText(getContext(), "No Order Placed", Toast.LENGTH_SHORT);

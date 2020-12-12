@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                                 progressBar.setVisibility(View.GONE);
                                                 startActivity(i);
+                                                finish();
                                             }
                                         }
                                         if (user != null) {
@@ -132,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                                 progressBar.setVisibility(View.GONE);
                                                 startActivity(i);
+                                                finish();
                                             }
                                         }
                                         if(user!=null) {
@@ -141,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                                 progressBar.setVisibility(View.GONE);
                                                 startActivity(i);
+                                                finish();
                                             }
                                         }
                                     }

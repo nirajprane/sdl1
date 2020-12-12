@@ -55,12 +55,14 @@ public class ParcelFragment extends Fragment {
                     Intent orderIntent = new Intent(getContext(), ParcelActivity.class);
                     orderIntent.putExtra("parcelNoFromActivityForParcel", parcelNumbers[position]);
                     startActivity(orderIntent);
+                    getActivity().finish();
 
                 }
                 else{
                     Intent menuIntent = new Intent(getContext(), MenuActivityParcel.class);
                     menuIntent.putExtra("parcelNo", parcelNumbers[position]);
                     startActivity(menuIntent);
+                    getActivity().finish();
 
 
                 }

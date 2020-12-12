@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sdl.ActivityForTable;
+import com.example.sdl.OrderSummary.OrderActivity;
 import com.example.sdl.R;
 import com.example.sdl.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -135,6 +137,7 @@ public class AddUserActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         Toast.makeText(AddUserActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(getApplicationContext(), ManagerMainActivity.class));
+                                        finish();
 
 
                                     }else{
@@ -161,6 +164,14 @@ public class AddUserActivity extends AppCompatActivity {
 
 
         });
+
+    }
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(AddUserActivity.this, ManagerMainActivity.class));
+        finish();
 
     }
 

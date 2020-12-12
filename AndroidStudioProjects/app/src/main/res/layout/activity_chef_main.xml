@@ -5,9 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/chef_logout"
+        android:text="Logout"
+        android:background="@drawable/button_reset"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_margin="8dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/chef_logout"
         android:id="@+id/rv_group"/>
 
 </RelativeLayout>

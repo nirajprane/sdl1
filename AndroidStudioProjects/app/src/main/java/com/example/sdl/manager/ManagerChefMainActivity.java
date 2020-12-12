@@ -1,21 +1,19 @@
-package com.example.sdl.chef;
+package com.example.sdl.manager;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sdl.LoginActivity;
+import com.example.sdl.ActivityForTable;
+import com.example.sdl.OrderSummary.OrderActivity;
 import com.example.sdl.R;
-import com.example.sdl.manager.ManagerMainActivity;
+import com.example.sdl.chef.GroupAdp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,12 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ChefMainActivity extends AppCompatActivity {
+public class ManagerChefMainActivity extends AppCompatActivity {
     RecyclerView rvgroup;
     ArrayList<String> arrayListGroup;
     LinearLayoutManager layoutManagerGroup;
     GroupAdp adapterGroup;
-    Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,34 +38,8 @@ public class ChefMainActivity extends AppCompatActivity {
         //using for loop to add multiple Group
         arrayListGroup = new ArrayList<>();
         loadFromDatabase();
-
-        //logout button
-        logout= findViewById(R.id.chef_logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChefMainActivity.this);
-                builder.setTitle("Confirmation PopUp!").
-                        setMessage("You sure, that you want to logout?");
-                builder.setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent i = new Intent(getApplicationContext(),
-                                        LoginActivity.class);
-                                startActivity(i);
-                                finish();
-                            }
-                        });
-                builder.setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert11 = builder.create();
-                alert11.show();
-            }
-        });
+        Button logout =findViewById(R.id.chef_logout);
+        logout.setVisibility(View.GONE);
 
         /*//Initailize group adapter
         adapterGroup = new GroupAdp(ChefMainActivity.this,arrayListGroup);
@@ -116,7 +87,7 @@ public class ChefMainActivity extends AppCompatActivity {
     protected void display(){
 
         //Initailize group adapter
-        adapterGroup = new GroupAdp(ChefMainActivity.this,arrayListGroup);
+        adapterGroup = new GroupAdp(ManagerChefMainActivity.this,arrayListGroup);
 
         //Initialize layout manager
         layoutManagerGroup = new LinearLayoutManager(this);
@@ -130,8 +101,9 @@ public class ChefMainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        Toast toast = Toast.makeText(getApplicationContext(), "Please Logout", Toast.LENGTH_SHORT);
-        toast.show();
+        super.onBackPressed();
+        startActivity(new Intent(ManagerChefMainActivity.this, ManagerMainActivity.class));
+        finish();
 
     }
 }

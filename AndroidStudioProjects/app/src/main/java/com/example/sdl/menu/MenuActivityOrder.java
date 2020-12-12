@@ -152,7 +152,6 @@ public class MenuActivityOrder extends AppCompatActivity {
                     returnIntent.putExtras(bundle);
                     returnIntent.putExtra("tableNoFromMenu",tableNo);
                     setResult(2,returnIntent);
-
                     finish();
                 }
             }
