@@ -17,14 +17,13 @@
         android:textStyle="bold"
         android:layout_margin="8dp"/>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".manager.ManagerMainActivity"
     android:background="@color/background_color"
    android:orientation="vertical"
+
     >
 
 
@@ -32,12 +31,13 @@
         android:id="@+id/textView"
         android:layout_width="304dp"
         android:layout_height="1dp"
+        android:layout_gravity="bottom|fill_horizontal"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
         android:layout_weight="1"
-        android:text="Manager's Catalogue"
-        android:textAlignment="center"
+        android:text="Manager's Menu"
+        android:gravity="center"
         android:textColor="@color/Black"
         android:textSize="30sp"
         android:textStyle="normal|bold|italic" />

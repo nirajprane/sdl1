@@ -85,26 +85,31 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="5"
                 android:text="Total Amount:  "
-                android:textAlignment="textEnd"/>
+                android:textAlignment="textEnd"
+                android:textColor="@color/skyBlue"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/total_amount"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="230" />
+                android:layout_weight="3"
+                android:text="230"
+                android:textColor="@color/Black"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/confirm_checkout"
-            android:layout_width="wrap_content"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/button_round"
             android:text="Confirm Checkout"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
