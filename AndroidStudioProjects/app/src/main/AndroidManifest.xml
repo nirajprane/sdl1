@@ -18,14 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".manager.AddUserActivity" />
+        <activity android:name=".manager.AddUserActivity"
+            android:exported="true"/>
         <activity
             android:name=".manager.ManagerMainActivity"
             android:exported="true" />
         <activity android:name=".OrderSummary.OrderActivity" />
         <activity
-            android:name=".menu.MenuActivity"
+            android:name=".menu.MenuActivityOrder"
             android:exported="true" />
+        <activity android:name=".menu.MenuActivityParcel"
+            android:exported="true"/>
+        <activity android:name=".OrderSummary.ParcelActivity"/>
+        <activity android:name=".manager.ManagerParcelActivity"/>
         <activity
             android:name=".ActivityForTable"
             android:exported="true" />
@@ -38,6 +43,7 @@
         <activity android:name=".manager.ManagerActivityForTable"/>
         <activity android:name=".manager.ManagerOrderActivity"/>
         <activity android:name=".manager.UserDisplayActivity"/>
+
     </application>
 
 </manifest>

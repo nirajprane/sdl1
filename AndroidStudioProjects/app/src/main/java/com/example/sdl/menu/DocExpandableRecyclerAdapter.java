@@ -34,43 +34,51 @@ public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<
     }
 
     @Override
-    public void onBindChildViewHolder(final MyChildViewHolder holder, final int flatPosition, ExpandableGroup group, int childIndex) {
+    public void onBindChildViewHolder(final MyChildViewHolder holder,  int flatPosition, ExpandableGroup group, int childIndex) {
         final ChildList childItem = ((ParentList) group).getItems().get(childIndex);
-
         holder.onBind(childItem.getTitle());
 
         final String TitleChild=childItem.getTitle();
         final int TitlePrice=childItem.getPrice();
+      //  holder.checkBox.setOnCheckedChangeListener(null);
+        /*if(!menuList.isEmpty()) {
+
+
+            if (menuList.get(flatPosition).checked) {
+                holder.checkBox.setChecked(true);
+            } else {
+                holder.checkBox.setChecked(false);
+            }
+        }*/
 
         if (uncheckAll) {
             holder.checkBox.setChecked(false);
             
         }
 
-       /* holder.check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                menuList.add(new Menu(TitleChild,TitlePrice));
-                holder.checkBox.setChecked(true);
-                Toast toast = Toast.makeText(view.getContext(), menuList.size()+" item selected", Toast.LENGTH_SHORT);
-                toast.show();
-
-            }
-
-
-        });*/
         holder.check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!holder.checkBox.isChecked()){
                     holder.checkBox.setChecked(true);
+                    menuList.add(new Menu(TitleChild,TitlePrice));
+                    Toast toast = Toast.makeText(v.getContext(), menuList.size()+" item selected", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 else {
                     holder.checkBox.setChecked(false);
+                    for(int i = 0 ; i < menuList.size() ; i++){
+                        if(TitleChild.equalsIgnoreCase(menuList.get(i).itemName)){
+                            menuList.remove(i);
+                        }
+                    }
+                    Toast toast;
+                    toast = Toast.makeText(v.getContext(), TitleChild+" removed", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
 
-                if (holder.checkBox.isChecked())
+               /* if (holder.checkBox.isChecked())
                 {
                     menuList.add(new Menu(TitleChild,TitlePrice));
                     Toast toast = Toast.makeText(v.getContext(), menuList.size()+" item selected", Toast.LENGTH_SHORT);
@@ -86,7 +94,7 @@ public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<
                     Toast toast;
                     toast = Toast.makeText(v.getContext(), TitleChild+" removed", Toast.LENGTH_SHORT);
                     toast.show();
-                }
+                }*/
             }
         });
 
@@ -94,6 +102,7 @@ public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<
 
 
     }
+
 
     @Override
     public void onBindGroupViewHolder(MyParentViewHolder holder, int flatPosition, final ExpandableGroup group) {
@@ -117,6 +126,7 @@ public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<
         notifyDataSetChanged();
 
     }
+
 
 
 }

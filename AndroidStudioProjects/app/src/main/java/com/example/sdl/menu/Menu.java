@@ -6,6 +6,7 @@ import android.os.Parcelable;
 public class Menu implements Parcelable {
     String itemName;
     int ItemPrice;
+    boolean checked;
 
     public Menu(String itemName, int itemPrice) {
         this.itemName = itemName;
@@ -16,6 +17,7 @@ public class Menu implements Parcelable {
         itemName = in.readString();
         ItemPrice = in.readInt();
     }
+
 
     public static final Creator<Menu> CREATOR = new Creator<Menu>() {
         @Override

@@ -1,7 +1,6 @@
 package com.example.sdl;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.sdl.OrderSummary.OrderActivity;
-import com.example.sdl.menu.MenuActivity;
+import com.example.sdl.menu.MenuActivityOrder;
 
 import static com.example.sdl.Flags.fromOrderActivity;
 
@@ -63,12 +61,12 @@ public class OrderFragment extends Fragment {
 
                 if(fromOrderActivity[position]) {
                     Intent orderIntent = new Intent(getContext(), OrderActivity.class);
-                    orderIntent.putExtra("tableNoFromOrder", tableNumbers[position]);
+                    orderIntent.putExtra("tableNoFromActivityForOrder", tableNumbers[position]);
                     startActivity(orderIntent);
 
                 }
                else{
-                    Intent menuIntent = new Intent(getContext(), MenuActivity.class);
+                    Intent menuIntent = new Intent(getContext(), MenuActivityOrder.class);
                     menuIntent.putExtra("tableNo", tableNumbers[position]);
                     startActivity(menuIntent);
 

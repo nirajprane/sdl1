@@ -31,6 +31,7 @@ public class BillGroupAdapter extends RecyclerView.Adapter<BillGroupAdapter.View
      ArrayList<String> arrayListGroupBill;
 
 
+
     //create constructor
 
 
@@ -55,6 +56,14 @@ public class BillGroupAdapter extends RecyclerView.Adapter<BillGroupAdapter.View
         //Initialize member arraylist
         final ArrayList<Order> arrayListMemberBill= new ArrayList<>();
         System.out.println("inside BillGropAdapter");
+        /*int total=0;
+        for(int i=0;i<arrayListMemberBill.size();i++)
+        {
+            Order order=arrayListMemberBill.get(position);
+            System.out.println(order.getTotalPrice()+" total price ");
+            total = total + order.getTotalPrice();
+        }
+        holder.totalAmount.setText(String.valueOf(total));*/
 
         FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
         DatabaseReference tableNode = databaseInstance.getReference("OrderForCheckout/" + arrayListGroupBill.get(position) + "/");
@@ -62,14 +71,16 @@ public class BillGroupAdapter extends RecyclerView.Adapter<BillGroupAdapter.View
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
+                int total=0;
                 // ArrayList<Order> orderListFromDatabase = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Order order = ds.getValue(Order.class);
+                    total=total+order.getTotalPrice();
                     arrayListMemberBill.add(order);
                 }
 
 
+                holder.totalAmount.setText(String.valueOf(total));
         //Initialze member adapter
         BillMemberAdapter billMemberAdapter = new BillMemberAdapter(arrayListMemberBill);
 
@@ -116,6 +127,7 @@ public class BillGroupAdapter extends RecyclerView.Adapter<BillGroupAdapter.View
         TextView tvNameBill;
         RecyclerView rvMemberBill;
         Button confirmCheckout;
+        TextView totalAmount;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -124,6 +136,7 @@ public class BillGroupAdapter extends RecyclerView.Adapter<BillGroupAdapter.View
             tvNameBill=itemView.findViewById(R.id.tv__name_bill);
             rvMemberBill=itemView.findViewById(R.id.rv_member_bill);
             confirmCheckout=itemView.findViewById(R.id.confirm_checkout);
+            totalAmount=itemView.findViewById(R.id.total_amount);
         }
     }
 }

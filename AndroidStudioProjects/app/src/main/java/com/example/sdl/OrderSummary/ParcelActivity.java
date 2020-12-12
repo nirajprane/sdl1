@@ -1,8 +1,5 @@
 package com.example.sdl.OrderSummary;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,31 +10,34 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.sdl.ActivityForTable;
+import com.example.sdl.menu.MenuActivityParcel;
 import com.example.sdl.Order;
 import com.example.sdl.R;
 import com.example.sdl.menu.Menu;
-import com.example.sdl.menu.MenuActivityOrder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.sdl.Flags.cOrderFlag;
-import static com.example.sdl.Flags.fromOrderActivity;
-
 import java.util.ArrayList;
 
-public class OrderActivity extends AppCompatActivity {
+import static com.example.sdl.Flags.cParcelFlag;
+import static com.example.sdl.Flags.fromParcelActivity;
+
+public class ParcelActivity extends AppCompatActivity {
 
     ArrayList<Menu> menuList = new ArrayList<>();
-    public ArrayList<Order>  orderList = new ArrayList<Order>();
+    public ArrayList<Order> orderList = new ArrayList<Order>();
     public ArrayList<Order> orderListForDatabase = new ArrayList<>();
     public ArrayList<Order> orderListForChefDatabase = new ArrayList<>();
     ListView list;
-    public String tableNoFromMenu;
-   public String tableNoFromOrder;
+    public String parcelNoFromMenu;
+   public String parcelNoFromParcel;
 
     OrderSummaryListAdapter orderSummaryListAdapter;
     int sizeOfOrderListBeforeNewAdd=0;
@@ -52,29 +52,29 @@ public class OrderActivity extends AppCompatActivity {
         Button addItemButton = (Button) findViewById(R.id.add_item);
         Button passOrderButton = (Button) findViewById(R.id.passToChef);
         Button endOrder = (Button) findViewById(R.id.endOrder);
-        TextView table = (TextView) findViewById(R.id.tableNo);
+        TextView parcel = (TextView) findViewById(R.id.tableNo);
 
-        tableNoFromMenu = getIntent().getStringExtra("tableNoFromMenu");
-        tableNoFromOrder = getIntent().getStringExtra("tableNoFromActivityForOrder");
-       // tableNoFromMenuFirst=getIntent().getStringExtra("tableNoFromMenuFirst");
+        parcelNoFromMenu = getIntent().getStringExtra("parcelNoFromMenu");
+        parcelNoFromParcel = getIntent().getStringExtra("parcelNoFromActivityForParcel");
+
 
         list = findViewById(R.id.listViewOrder);
 
 
         //to check from where orderActivity is opened
-        if (tableNoFromOrder == null  ) {
+        if (parcelNoFromParcel == null  ) {
 
             Bundle args = getIntent().getBundleExtra("BUNDLE");
             menuList =args.getParcelableArrayList("ARRAYLIST");
 
             addItemToOrderList();
-            table.setText(tableNoFromMenu);
+            parcel.setText(parcelNoFromMenu);
             displayList();
         }
         else {
 
             loadFromDatabase();
-            table.setText(tableNoFromOrder);
+            parcel.setText(parcelNoFromParcel);
         }
 
 
@@ -82,16 +82,16 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // dataExist=false;
-                Intent i = new Intent(OrderActivity.this, MenuActivityOrder.class);
+                Intent i = new Intent(ParcelActivity.this, MenuActivityParcel.class);
 
-                if(tableNoFromOrder==null){
-                    i.putExtra("tableNo", tableNoFromMenu);
-                    i.putExtra("addbutton","abcd");
+                if(parcelNoFromParcel==null){
+                    i.putExtra("parcelNo", parcelNoFromMenu);
+                    i.putExtra("additem","abcd");
                     Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("before",menuList);
+                    bundle.putParcelableArrayList("Before",menuList);
                     i.putExtras(bundle);
                 }else{
-                    i.putExtra("tableNo",tableNoFromOrder);
+                    i.putExtra("parcelNo",parcelNoFromParcel);
                 }
                 startActivityForResult(i, 1);
             }
@@ -101,13 +101,14 @@ public class OrderActivity extends AppCompatActivity {
         passOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // System.out.println("table passOrder "+tableNoFromMenu);
-                loadToDatabase("Table/"+tableNoFromMenu);
-                int tablePos = Integer.parseInt(String.valueOf(tableNoFromMenu.charAt(1)));
 
-                cOrderFlag[tablePos-1] = true;
-                Intent intent = new Intent(OrderActivity.this, ActivityForTable.class);
-                intent.putExtra("tableNoFromOrderSummary", tableNoFromMenu);
+                loadToDatabase("Parcel/"+parcelNoFromMenu);
+                int parcelPos = Integer.parseInt(String.valueOf(parcelNoFromMenu.charAt(1)));
+
+                cParcelFlag[parcelPos-1] = true;
+                System.out.println(cParcelFlag[parcelPos-1]+" cccccccccccccccccccccc");
+                Intent intent = new Intent(ParcelActivity.this, ActivityForTable.class);
+                intent.putExtra("parcelNoFromParcelSummary", parcelNoFromMenu);
                 //intent.putExtra();
                 startActivity(intent);
                 loadToDatabaseForChef();
@@ -133,7 +134,7 @@ public class OrderActivity extends AppCompatActivity {
                 System.out.println("on act result..........................");
                 Bundle bundle = data.getExtras();
                 ArrayList<Menu> addItemList = bundle.getParcelableArrayList("AddedMenu");
-                tableNoFromMenu = data.getStringExtra("tableNoFromMenu");
+                parcelNoFromMenu = data.getStringExtra("parcelNoFromMenu");
 
                 for (int i = 0; i < addItemList.size(); i++) {
                     menuList.add(addItemList.get(i));
@@ -187,7 +188,7 @@ public class OrderActivity extends AppCompatActivity {
      //   String
 
         //Getting Reference to a User node, (it will be created if not already there)
-        DatabaseReference itemNode = databaseInstance.getReference("OrderToPrepare/" +tableNoFromMenu+ "/");
+        DatabaseReference itemNode = databaseInstance.getReference("OrderToPrepare/" +parcelNoFromMenu+ "/");
         orderListForDatabase =  orderSummaryListAdapter.passOrderListForDatabase();
         int newOrder = sizeOfOrderListBeforeNewAdd-menuList.size();
         for (int i = newOrder; i < orderListForDatabase.size(); i++) {
@@ -197,14 +198,14 @@ public class OrderActivity extends AppCompatActivity {
         itemNode.setValue(orderListForChefDatabase);
 
         FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
-        DatabaseReference statusNode= firebaseDatabase.getReference("ChefOrderStatus/"+tableNoFromMenu);
+        DatabaseReference statusNode= firebaseDatabase.getReference("ChefOrderStatus/"+parcelNoFromMenu);
         statusNode.setValue("not started");
 
     }
 
     protected void loadFromDatabase() {
         FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
-        DatabaseReference tableNode = databaseInstance.getReference("Table/" + tableNoFromOrder + "/");
+        DatabaseReference tableNode = databaseInstance.getReference("Parcel/" + parcelNoFromParcel + "/");
         tableNode.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -227,17 +228,17 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     protected void alertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ParcelActivity.this);
         builder.setTitle("Confirmation").setMessage("Do you want this to CheckOut")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        loadToDatabase("OrderForCheckout/"+tableNoFromOrder);
-                        removeDataFromCaptain(tableNoFromOrder);
-                        int tableNo=Integer.parseInt(String.valueOf(tableNoFromOrder.charAt(1)));
-                        fromOrderActivity[tableNo-1]=false;
-                        cOrderFlag[tableNo-1] = false;
-                        Intent checkoutIntent = new Intent(OrderActivity.this, ActivityForTable.class);
+                        loadToDatabase("OrderForCheckout/"+parcelNoFromParcel);
+                        removeDataFromCaptain(parcelNoFromParcel);
+                        int parcelNo= Integer.parseInt(String.valueOf(parcelNoFromParcel.charAt(1)));
+                        fromParcelActivity[parcelNo-1]=false;
+                        cParcelFlag[parcelNo-1] = false;
+                        Intent checkoutIntent = new Intent(ParcelActivity.this, ActivityForTable.class);
                         startActivity(checkoutIntent);
                         finish();
 
@@ -249,17 +250,17 @@ public class OrderActivity extends AppCompatActivity {
 
     }
 
-    public void removeDataFromCaptain(String tableNo){
+    public void removeDataFromCaptain(String parcelNo){
 
         FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
-        DatabaseReference tableNode = databaseInstance.getReference("Table/" + tableNo );
+        DatabaseReference tableNode = databaseInstance.getReference("Parcel/" + parcelNo );
         tableNode.removeValue();
     }
     @Override
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(OrderActivity.this, ActivityForTable.class));
+        startActivity(new Intent(ParcelActivity.this, ActivityForTable.class));
         finish();
 
     }

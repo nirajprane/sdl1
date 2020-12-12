@@ -3,6 +3,7 @@ package com.example.sdl.manager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,7 @@ public class AddUserActivity extends AppCompatActivity {
         mRegisterBtn = findViewById(R.id.loginBtn);
         mType = findViewById(R.id.editTextType);
 
+
         fAuth = FirebaseAuth.getInstance();
          rootNode = FirebaseDatabase.getInstance();
 
@@ -74,27 +76,36 @@ public class AddUserActivity extends AppCompatActivity {
 
 
                 // Checking the conditions
-                if (TextUtils.isEmpty(email)){
-                    mEmail.setError("Username is Required");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)){
-                    mPassword.setError("Password is Required.");
-                    return;
-                }
-
                 if (TextUtils.isEmpty(fullName)){
-                    mPassword.setError("Name  is Required.");
+                    mFullName.setError("Name  is Required.");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(type)){
+                    mType.setError("Type is Required.");
                     return;
                 }
 
                 if (TextUtils.isEmpty(phone)){
-                    mPassword.setError("Phone Number is Required.");
+                    mPhone.setError("Phone Number is Required.");
                     return;
                 }
-                if (TextUtils.isEmpty(type)){
-                    mPassword.setError("Type is Required.");
+                if(Patterns.PHONE.matcher(phone).matches())
+                {
+                    mPhone.setError("Provide Proper Phone Number");
+                }
+
+                if (TextUtils.isEmpty(email)){
+                    mEmail.setError("Email is Required");
+                    return;
+                }
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                {
+                    mEmail.setError("Provide Proper Email");
+                }
+
+                if (TextUtils.isEmpty(password)){
+                    mPassword.setError("Password is Required.");
                     return;
                 }
 

@@ -101,7 +101,7 @@ public class ManagerOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // dataExist=false;
-                Intent i = new Intent(ManagerOrderActivity.this, MenuActivity.class);
+                Intent i = new Intent(ManagerOrderActivity.this, MenuActivityOrder.class);
                 i.putExtra("tableNo", tableNoFromOrder);
                 startActivityForResult(i, 1);
             }

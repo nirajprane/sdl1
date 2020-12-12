@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.sdl.ActivityForTable;
 import com.example.sdl.OrderSummary.OrderActivity;
+import com.example.sdl.OrderSummary.ParcelActivity;
 import com.example.sdl.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,14 +23,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.sdl.Flags.cFlag;
+import static com.example.sdl.Flags.cParcelFlag;
 
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivityParcel extends AppCompatActivity {
     private RecyclerView recycler_view;
     private Button confirm;
     private Button reset;
-    int tablePos;
+    int parcelPos;
+    String parcelNo;
+    String parcelNoFirst;
     public ArrayList<Menu> menuList = new ArrayList<>( );
     DocExpandableRecyclerAdapter adapter;
 
@@ -39,10 +42,19 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Intent intent = getIntent();
-        final String tableNo =  intent.getStringExtra("tableNo");
-        if(tableNo!=null) {
-             tablePos = Integer.parseInt(String.valueOf(tableNo.charAt(1)));
+        Intent intents = getIntent();
+        parcelNo =  intents.getStringExtra("parcelNo");
+        parcelNoFirst= intents.getStringExtra("additem");
+        if(parcelNoFirst!=null){
+            Bundle bundle = intents.getExtras();
+            menuList= bundle.getParcelableArrayList("Before");
+            //menuList = bundle.getParcelableArrayList("Before");
+
+        }
+
+        System.out.println(parcelNo+" parcel no");
+        if(parcelNo!=null) {
+            parcelPos = Integer.parseInt(String.valueOf(parcelNo.charAt(1)));
         }
 
         //Define buttons
@@ -93,7 +105,7 @@ public class MenuActivity extends AppCompatActivity {
                             Parent.add(new ParentList(ParentKey, Child));
 
                             adapter = new DocExpandableRecyclerAdapter(Parent,menuList);
-
+                            recycler_view.setItemViewCacheSize(30);
                             recycler_view.setAdapter(adapter);
 
                         }
@@ -117,15 +129,15 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!cFlag[tablePos-1]) {
+                if (!cParcelFlag[parcelPos-1]) {
                     if (menuList.size() != 0) {
                         System.out.println("from menu first time");
-                        Intent orderIntent = new Intent(MenuActivity.this, OrderActivity.class);
+                        Intent orderIntent = new Intent(MenuActivityParcel.this, ParcelActivity.class);
                         Bundle args = new Bundle();
                         args.putParcelableArrayList("ARRAYLIST",menuList);
                         orderIntent.putExtra("BUNDLE",args);
-                        orderIntent.putExtra("tableNoFromMenu",tableNo);
-                        cFlag[tablePos-1] = true;
+                        orderIntent.putExtra("parcelNoFromMenu",parcelNo);
+                        //cOrderFlag[tablePos-1] = true;
                         startActivity(orderIntent);
                         finish();
                     } else {
@@ -134,13 +146,13 @@ public class MenuActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    System.out.println("aaaaaaaaaaaaaaaa");
+                    //System.out.println("aaaaaaaaaaaaaaaa");
                  //   cFlag[tablePos-1]=false;
                     Intent returnIntent = new Intent();
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("AddedMenu",menuList);
                     returnIntent.putExtras(bundle);
-                    returnIntent.putExtra("tableNoFromMenu",tableNo);
+                    returnIntent.putExtra("parcelNoFromMenu",parcelNo);
                     setResult(2,returnIntent);
 
                     finish();
@@ -242,7 +254,7 @@ public class MenuActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(MenuActivity.this, ActivityForTable.class));
+        startActivity(new Intent(MenuActivityParcel.this, ActivityForTable.class));
         finish();
 
     }

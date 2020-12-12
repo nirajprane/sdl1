@@ -69,6 +69,7 @@ public class ChildList implements Parcelable {
         parcel.writeString(title);
         parcel.writeInt(price);
     }
+
 }
 
 class MyChildViewHolder extends ChildViewHolder {
@@ -90,6 +91,7 @@ class MyChildViewHolder extends ChildViewHolder {
         listChild.setText(Sousdoc);
 
     }
+
 
 
 }
