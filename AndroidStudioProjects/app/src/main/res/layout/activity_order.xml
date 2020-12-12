@@ -9,26 +9,32 @@
 
 
     <TextView
+        android:id="@+id/orderSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ORDER SUMMARY"
-        android:id="@+id/orderSummary"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_alignParentTop="true"
         android:layout_gravity="center"
+        android:text="Order Summary"
         android:textAlignment="center"
-        android:layout_alignParentTop="true"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/Black"
+        android:textStyle="normal|bold|italic" />
 
     <TextView
+        android:id="@+id/tableNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tableNo"
         android:layout_below="@id/orderSummary"
-        android:text="Table No. X" />
+        android:background="@color/skyBlue"
+        android:text="Table No. X"
+        android:textColor="#FFFFFF"
+        android:textStyle="normal|bold|italic" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/skyBlue"
         android:layout_below="@id/tableNo"
         android:id="@+id/linear">
 
@@ -37,13 +43,19 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="S.No." />
+            android:text="S.No."
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textStyle="normal|bold|italic" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:text="Item Name" />
+            android:text="Item Name"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textStyle="normal|bold|italic" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -56,7 +68,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Quantity" />
+                android:text="Quantity"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textStyle="normal|bold|italic" />
 
         </LinearLayout>
 
@@ -66,6 +81,7 @@
         android:id="@+id/listViewOrder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_color"
         android:layout_below="@id/linear"
         android:layout_above="@id/liner2" />
 
@@ -87,21 +103,30 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Add New Item" />
+                android:background="@drawable/button_confirm"
+                android:text="Add New Item"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/passToChef"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Pass Order To Chef" />
+                android:background="@drawable/button_round"
+                android:text="Pass Order To Chef"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <Button
             android:id="@+id/endOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="End Order" />s
+            android:background="@drawable/button_reset"
+            android:text="End Order"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />s
 
     </LinearLayout>
 

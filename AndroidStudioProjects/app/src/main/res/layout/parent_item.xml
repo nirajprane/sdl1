@@ -10,27 +10,28 @@
     >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#9E9E9E"
+        android:background="@color/skyBlue"
         android:gravity="center"
         >
+
         <TextView
             android:id="@+id/listParent"
-            android:text="text"
-            android:textSize="15dp"
-            android:layout_width="wrap_content"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="45dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="45dp"
             android:layout_marginRight="2dp"
             android:layout_marginBottom="45dp"
-            android:textColor="#000000"
+            android:text="text"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
 
-            />
+            android:textSize="30sp"
+            android:textStyle="normal|bold|italic" />
 
     </LinearLayout>
 </LinearLayout>

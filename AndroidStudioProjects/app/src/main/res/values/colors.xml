@@ -11,6 +11,7 @@
     <color name="primary_dark_color">#2F1D1A</color>
 
     <!-- Background color for app -->
+    <color name="background_color">#EBF6EC</color>
     <color name="tan_background">#FFF7DA</color>
     <color name="White">#FFFFFFFF</color>
     <color name="Silver">#FFC0C0C0</color>
@@ -28,4 +29,15 @@
     <color name="Navy">#FF000080</color>
     <color name="Fuchsia">#FFFF00FF</color>
     <color name="Purple">#FF800080</color>
+    <color name="colorPrimary1">#3F4375</color>
+    <color name="colorPrimaryDark1">#373B68</color>
+    <color name="colorAccent1">#1375CC</color>
+    <color name="textColor">#0B0A0A</color>
+    <color name="layoutColor">#FFFFFF</color>
+    <color name="red">#be131f</color>
+    <color name="green">#13be5c</color>
+    <color name="gray">#7d7d7d</color>
+    <color name="black">#000000</color>
+    <color name="blue">#5296eb</color>
+    <color name="skyBlue">#1375be</color>
 </resources>

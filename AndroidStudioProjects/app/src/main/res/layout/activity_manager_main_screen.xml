@@ -5,20 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".manager.ManagerMainActivity"
+    android:background="@color/background_color"
    android:orientation="vertical" >
 
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="304dp"
+        android:layout_height="1dp"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="60dp"
         android:layout_weight="1"
         android:text="Manager's Catalogue"
-        android:textSize="30sp" />
-
+        android:textAlignment="center"
+        android:textColor="@color/Black"
+        android:textSize="30sp"
+        android:textStyle="normal|bold|italic" />
 
     <Button
         android:id="@+id/buttonBP"
@@ -31,7 +34,10 @@
         android:layout_marginRight="50dp"
         android:layout_marginBottom="0dp"
         android:layout_weight="1"
-        android:text="Bill Payment" />
+        android:background="@drawable/button_round"
+        android:text="Bill Payment"
+        android:textColor="@color/White"
+        android:textStyle="normal|bold|italic" />
 
     <Button
         android:id="@+id/buttonWS"
@@ -44,7 +50,10 @@
         android:layout_marginRight="50dp"
         android:layout_marginBottom="25dp"
         android:layout_weight="1"
-        android:text="Waiter's Screen" />
+        android:background="@drawable/button_round"
+        android:text="Waiter's Screen"
+        android:textColor="@color/White"
+        android:textStyle="normal|bold|italic" />
 
     <Button
         android:id="@+id/buttonKS"
@@ -56,7 +65,10 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:layout_weight="1"
-        android:text="Kitchen Screen" />
+        android:background="@drawable/button_round"
+        android:text="Kitchen Screen"
+        android:textColor="@color/White"
+        android:textStyle="normal|bold|italic" />
 
     <Button
         android:id="@+id/buttonAU"
@@ -68,7 +80,10 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:layout_weight="1"
-        android:text="Add User" />
+        android:background="@drawable/button_round"
+        android:text="Add User"
+        android:textColor="@color/White"
+        android:textStyle="normal|bold|italic" />
 
     <Button
         android:id="@+id/buttonEI"
@@ -81,6 +96,9 @@
         android:layout_marginRight="50dp"
         android:layout_marginBottom="100dp"
         android:layout_weight="1"
-        android:text="Employee information" />
+        android:background="@drawable/button_round"
+        android:text="Employee information"
+        android:textColor="@color/White"
+        android:textStyle="normal|bold|italic" />
 
 </LinearLayout>

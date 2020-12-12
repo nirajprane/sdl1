@@ -85,6 +85,9 @@ public class AddUserActivity extends AppCompatActivity {
                     mType.setError("Type is Required.");
                     return;
                 }
+               /* if(type!="Waiter"||type!="Manager"||type!="Chef"){
+                    mType.setError("Choose from Waiter/Manager/Chef");
+                }*/
 
                 if (TextUtils.isEmpty(phone)){
                     mPhone.setError("Phone Number is Required.");
@@ -93,6 +96,7 @@ public class AddUserActivity extends AppCompatActivity {
                 if(Patterns.PHONE.matcher(phone).matches())
                 {
                     mPhone.setError("Provide Proper Phone Number");
+                    return;
                 }
 
                 if (TextUtils.isEmpty(email)){

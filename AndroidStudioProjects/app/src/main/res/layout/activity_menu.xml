@@ -18,8 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="MENU"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:text="Menu"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="#050505"
+            android:textStyle="normal|bold|italic" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,20 +42,28 @@
         android:layout_weight="1">
 
         <Button
+            android:id="@+id/reset_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:id="@+id/reset_button"
-            android:text="Reset"/>
+            android:background="@drawable/button_reset"
+            android:text="Reset"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/confirm_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:layout_gravity="center_vertical"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:id="@+id/confirm_button"
-            android:text="Confirm" />
+            android:background="@drawable/button_confirm"
+            android:text="Confirm"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
