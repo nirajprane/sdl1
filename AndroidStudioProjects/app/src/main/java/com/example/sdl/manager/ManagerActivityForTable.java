@@ -34,7 +34,7 @@ public class ManagerActivityForTable extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        finish();
+       // finish();
 
     }
     @Override

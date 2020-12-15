@@ -61,7 +61,7 @@ public class ManagerMainActivity extends AppCompatActivity {
         kitchenScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ChefMainActivity.class));
+                startActivity(new Intent(getApplicationContext(), ManagerChefMainActivity.class));
                 finish();
             }
         });

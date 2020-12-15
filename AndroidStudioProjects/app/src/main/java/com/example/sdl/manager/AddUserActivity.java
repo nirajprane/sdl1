@@ -30,7 +30,7 @@ public class AddUserActivity extends AppCompatActivity {
 
     public static final String TAG = null;
     // Created the variables
-    EditText mFullName, mEmail, mPassword, mPhone,mType;
+    EditText mFullName, mEmail, mPassword, mPhone, mType;
     Button mRegisterBtn;
     FirebaseDatabase rootNode;
     FirebaseAuth fAuth;
@@ -44,7 +44,7 @@ public class AddUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_user);
 
         mFullName = findViewById(R.id.editTextName);
-       mEmail = findViewById(R.id.email);
+        mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         mPhone = findViewById(R.id.editTextPhoneNumber);
         progressBar = findViewById(R.id.loading);
@@ -53,14 +53,14 @@ public class AddUserActivity extends AppCompatActivity {
 
 
         fAuth = FirebaseAuth.getInstance();
-         rootNode = FirebaseDatabase.getInstance();
+        rootNode = FirebaseDatabase.getInstance();
 
 
         // If the user is already logged in then it will go to main
-      //  if (fAuth.getCurrentUser() != null){
+        //  if (fAuth.getCurrentUser() != null){
         //    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-          //  finish();
-       // }
+        //  finish();
+        // }
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,44 +73,43 @@ public class AddUserActivity extends AppCompatActivity {
                 final String fullName = mFullName.getText().toString();
                 final String phone = mPhone.getText().toString().trim();
                 final String email = mEmail.getText().toString();
-                final String type =mType.getText().toString();
-
+                final String type = mType.getText().toString();
 
 
                 // Checking the conditions
-                if (TextUtils.isEmpty(fullName)){
+                if (TextUtils.isEmpty(fullName)) {
                     mFullName.setError("Name  is Required.");
                     return;
                 }
 
-                if (TextUtils.isEmpty(type)){
+                if (TextUtils.isEmpty(type)) {
                     mType.setError("Type is Required.");
                     return;
                 }
-               /* if(type!="Waiter"||type!="Manager"||type!="Chef"){
+                if (!type.matches("Waiter|Manager|Chef")) {
                     mType.setError("Choose from Waiter/Manager/Chef");
-                }*/
+                    return;
+                }
 
-                if (TextUtils.isEmpty(phone)){
+                if (TextUtils.isEmpty(phone)) {
                     mPhone.setError("Phone Number is Required.");
                     return;
                 }
-                if(Patterns.PHONE.matcher(phone).matches())
-                {
+                if (phone.length() != 10) {
                     mPhone.setError("Provide Proper Phone Number");
                     return;
                 }
 
-                if (TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is Required");
                     return;
                 }
-                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-                {
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     mEmail.setError("Provide Proper Email");
+                    return;
                 }
 
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is Required.");
                     return;
                 }
@@ -123,52 +122,50 @@ public class AddUserActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
 
                             Toast.makeText(AddUserActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
 
-                            User user = new User(fullName,email,phone,password,type);
+                            User user = new User(fullName, email, phone, password, type);
 
 
                             FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser()
-                            .getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    .getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         Toast.makeText(AddUserActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(getApplicationContext(), ManagerMainActivity.class));
                                         finish();
 
 
-                                    }else{
+                                    } else {
+                                        progressBar.setVisibility(View.INVISIBLE);
                                         Toast.makeText(getApplicationContext(), "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.GONE);
+
 
                                     }
                                 }
                             });
                         }
-                        if(!task.isSuccessful()){
-                            FirebaseAuthException e = (FirebaseAuthException )task.getException();
-                            Toast.makeText(AddUserActivity.this, "Failed Registration: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (!task.isSuccessful()) {
+                            FirebaseAuthException e = (FirebaseAuthException) task.getException();
+                            Toast.makeText(AddUserActivity.this, "Failed Registration: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                }
+                    }
 
 
-
-
-            });
-        }
-
+                });
+            }
 
 
         });
 
     }
+
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(AddUserActivity.this, ManagerMainActivity.class));
         finish();
